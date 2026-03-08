@@ -1,6 +1,6 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -17,6 +17,35 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 
 <body>
 
+
+<!-- HAMBURGER MENU -->
+
+<button id="menu-toggle" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</button>
+
+
+<!-- SIDE TOOL MENU -->
+
+<div id="side-menu">
+
+<h3>Tools</h3>
+
+<button onclick="openTool('tool-simulator')">
+<i class="fas fa-calculator"></i> Simulator
+</button>
+
+<button onclick="openTool('tool-video')">
+<i class="fas fa-video"></i> Video Lesson
+</button>
+
+<button onclick="openTool('tool-about')">
+<i class="fas fa-info-circle"></i> About Project
+</button>
+
+</div>
+
+
 <header>
 <div class="container">
 
@@ -28,6 +57,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 
 
 <div class="container">
+
+
+<!-- TOP NAVIGATION -->
 
 <div class="page-navigation">
 
@@ -42,7 +74,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 <button class="page-btn" data-page="9">Conclusion</button>
 
 </div>
-
 
 
 <!-- PAGE 1 -->
@@ -67,9 +98,7 @@ limited physical memory efficiently.
 <ul>
 
 <li>Allows programs larger than RAM to run using <strong>virtual memory</strong>.</li>
-
 <li>Reduces unnecessary disk access by choosing the best page to replace.</li>
-
 <li>Improves system responsiveness and multitasking capability.</li>
 
 </ul>
@@ -100,7 +129,7 @@ limited physical memory efficiently.
 
 <li>The requested page is loaded from secondary storage into memory.</li>
 
-<li>The program resumes execution as if nothing happened.</li>
+<li>The program resumes execution.</li>
 
 </ol>
 
@@ -118,27 +147,19 @@ limited physical memory efficiently.
 
 <h2>FIFO (First In First Out)</h2>
 
-<p>
-FIFO replaces the page that entered memory first.
-</p>
+<p>FIFO replaces the page that entered memory first.</p>
 
 <ul>
-
-<li>Simple to implement using a queue data structure.</li>
-
-<li>Pages are removed in the same order they were loaded.</li>
-
-<li>Can suffer from <strong>Belady’s Anomaly</strong>, where more frames increase page faults.</li>
-
+<li>Simple queue implementation.</li>
+<li>Pages removed in arrival order.</li>
+<li>May cause <strong>Belady’s anomaly</strong>.</li>
 </ul>
 
 <h3>Example</h3>
 
 <p><strong>Reference String:</strong> 1, 2, 3, 4, 1</p>
 
-<p>
-Frames: [1] → [1,2] → [1,2,3] → replace 1 → [4,2,3]
-</p>
+<p>Frames: [1] → [1,2] → [1,2,3] → replace 1 → [4,2,3]</p>
 
 <p><strong>Page Faults:</strong> 4</p>
 
@@ -175,9 +196,18 @@ time in the future.
 
 <p><strong>Reference String:</strong> 7, 0, 1, 2, 0, 3</p>
 
+<p><strong>Frames = 3</strong></p>
+
 <p>
-Frames start: [7,0,1] → next page = 2 → replace 7 → [2,0,1]
+Step 1 → [7]  
+Step 2 → [7,0]  
+Step 3 → [7,0,1]  
+Step 4 → Next page = 2 → Replace page **7** (used farthest in future) → [2,0,1]  
+Step 5 → Page 0 already in memory  
+Step 6 → Page 3 replaces **1** → [2,0,3]  
 </p>
+
+<p><strong>Total Page Faults: 5</strong></p>
 
 </section>
 
@@ -199,9 +229,9 @@ LRU replaces the page that has not been used for the longest time in the past.
 
 <ul>
 
-<li>Based on the assumption that recently used pages will likely be used again.</li>
+<li>Based on the idea that recently used pages will likely be used again.</li>
 
-<li>Provides better performance than FIFO in many workloads.</li>
+<li>Provides better performance than FIFO in many cases.</li>
 
 <li>Requires additional tracking of page usage history.</li>
 
@@ -211,13 +241,19 @@ LRU replaces the page that has not been used for the longest time in the past.
 
 <p><strong>Reference String:</strong> 1, 2, 3, 1, 4</p>
 
+<p><strong>Frames = 3</strong></p>
+
 <p>
-Frames: [1,2,3] → page 1 used again → replace least recently used page (2).
+Step 1 → [1]  
+Step 2 → [1,2]  
+Step 3 → [1,2,3]  
+Step 4 → Page 1 used again (recently used)  
+Step 5 → Page 4 replaces **least recently used page (2)**  
 </p>
 
+<p><strong>Total Page Faults: 4</strong></p>
+
 </section>
-
-
 
 <!-- PAGE 6 -->
 
@@ -232,31 +268,17 @@ Frames: [1,2,3] → page 1 used again → replace least recently used page (2).
 <h3>MRU (Most Recently Used)</h3>
 
 <ul>
-
-<li>Replaces the most recently accessed page.</li>
-
-<li>Useful in specific workloads such as sequential scans.</li>
-
+<li>Replaces the page used most recently.</li>
+<li>Opposite of LRU.</li>
+<li>Useful in sequential workloads.</li>
 </ul>
 
 <h3>Random Replacement</h3>
 
 <ul>
-
-<li>Selects a page randomly for replacement.</li>
-
-<li>Very simple but performance may vary.</li>
-
-</ul>
-
-<h3>Clock Algorithm</h3>
-
-<ul>
-
-<li>An efficient approximation of LRU.</li>
-
-<li>Uses a circular list with reference bits.</li>
-
+<li>Selects a page randomly.</li>
+<li>Very simple to implement.</li>
+<li>Performance varies.</li>
 </ul>
 
 </section>
@@ -267,27 +289,15 @@ Frames: [1,2,3] → page 1 used again → replace least recently used page (2).
 
 <section id="page-7" class="content-section">
 
-<div class="section-icon">
-<i class="fas fa-eye"></i>
-</div>
-
 <h2>Practical Example</h2>
 
-<p><strong>Reference String:</strong> 1, 3, 0, 3, 5, 6</p>
+<p><strong>Reference:</strong> 1, 3, 0, 3, 5, 6</p>
 
 <ul>
-
-<li>FIFO → 6 page faults</li>
-
-<li>LRU → 5 page faults</li>
-
-<li>Optimal → 4 page faults</li>
-
+<li>FIFO → 6 faults</li>
+<li>LRU → 5 faults</li>
+<li>Optimal → 4 faults</li>
 </ul>
-
-<p>
-This comparison shows how algorithm choice affects memory performance.
-</p>
 
 </section>
 
@@ -297,19 +307,13 @@ This comparison shows how algorithm choice affects memory performance.
 
 <section id="page-8" class="content-section">
 
-<div class="section-icon">
-<i class="fas fa-tachometer-alt"></i>
-</div>
-
 <h2>Performance Impact</h2>
 
 <ul class="performance-list">
 
-<li><i class="fas fa-hdd"></i> Efficient algorithms reduce expensive disk I/O.</li>
-
-<li><i class="fas fa-exclamation-triangle"></i> Poor algorithms may cause <strong>thrashing</strong>.</li>
-
-<li><i class="fas fa-cogs"></i> Modern OS use optimized LRU-based strategies.</li>
+<li><i class="fas fa-hdd"></i> Reduces disk I/O.</li>
+<li><i class="fas fa-exclamation-triangle"></i> Prevents thrashing.</li>
+<li><i class="fas fa-cogs"></i> Modern OS use LRU variants.</li>
 
 </ul>
 
@@ -321,26 +325,63 @@ This comparison shows how algorithm choice affects memory performance.
 
 <section id="page-9" class="content-section">
 
-<div class="section-icon">
-<i class="fas fa-balance-scale"></i>
-</div>
-
 <h2>Conclusion</h2>
-
-<p>
-Page replacement algorithms are essential for efficient memory management
-in modern operating systems.
-</p>
 
 <ul>
 
-<li>They help maximize the use of limited RAM.</li>
-
-<li>Different algorithms provide different performance trade-offs.</li>
-
-<li>Understanding them helps design better computing systems.</li>
+<li>Efficient memory management is essential.</li>
+<li>Different algorithms give different results.</li>
+<li>Understanding them improves system design.</li>
 
 </ul>
+
+</section>
+
+
+
+<!-- TOOL PAGE : SIMULATOR -->
+
+<section id="tool-simulator" class="tool-page">
+
+<h2>Page Replacement Simulator</h2>
+
+<label>Reference String</label>
+<input id="refString" placeholder="Example: 7 0 1 2 0 3">
+
+<label>Frames</label>
+<input id="frames" type="number">
+
+<button onclick="runFIFO()">Calculate FIFO</button>
+
+<div id="result"></div>
+
+</section>
+
+
+
+<!-- TOOL PAGE : VIDEO -->
+
+<section id="tool-video" class="tool-page">
+
+<h2>Learning Video</h2>
+
+<video width="100%" controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+
+</section>
+
+
+
+<!-- TOOL PAGE : ABOUT -->
+
+<section id="tool-about" class="tool-page">
+
+<h2>About This Project</h2>
+
+<p>
+This project explains how operating systems manage memory using page replacement techniques.
+</p>
 
 </section>
 
@@ -350,4 +391,3 @@ in modern operating systems.
 
 </body>
 </html>
-```
