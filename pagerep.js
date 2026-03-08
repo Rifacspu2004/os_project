@@ -2,7 +2,6 @@
 
 function toggleMenu(){
 document.getElementById("side-menu").classList.toggle("active");
-document.querySelector(".container").classList.toggle("shift");
 
 }
 
@@ -86,3 +85,4 @@ document.getElementById("result").innerHTML=
 "Page Faults : "+faults;
 
 }
+
