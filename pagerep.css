@@ -79,14 +79,12 @@ color:#1a2980;
 
 .container{
 max-width:1200px;
-margin:auto;
+margin-left:260px;
 padding:0 20px;
 transition:0.3s;
 }
 
-.container.shift{
-margin-left:260px;
-}
+
 
 
 /* HEADER */
