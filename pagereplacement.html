@@ -21,7 +21,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 <!-- HAMBURGER MENU -->
 
 <button id="menu-toggle" onclick="toggleMenu()">
-<i class="fas fa-bars"></i>
+  <div class="bars">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <span class="menu-label">MENU</span>
 </button>
 
 
@@ -343,17 +348,62 @@ Step 5 → Page 4 replaces **least recently used page (2)**
 
 <section id="tool-simulator" class="tool-page">
 
-<h2>Page Replacement Simulator</h2>
+<button class="back-home-btn" onclick="goHome()">
+  <i class="fas fa-arrow-left"></i> Back to Home
+</button>
 
-<label>Reference String</label>
-<input id="refString" placeholder="Example: 7 0 1 2 0 3">
+<div class="sim-title-row">
+  <div class="sim-title-icon"><i class="fas fa-calculator"></i></div>
+  <h2>Page Replacement Simulator</h2>
+</div>
 
-<label>Frames</label>
-<input id="frames" type="number">
+<!-- INPUT CARD -->
+<div class="sim-input-card">
 
-<button onclick="runFIFO()">Calculate FIFO</button>
+  <div class="sim-field-row">
+    <div class="sim-field">
+      <label class="sim-label">Reference String</label>
+      <input id="refString" type="text" class="sim-input" placeholder="e.g. 7 0 1 2 0 3" />
+    </div>
+    <div class="sim-field short">
+      <label class="sim-label">Number of Frames</label>
+      <input id="frames" type="number" class="sim-input" value="3" min="1" max="10" />
+    </div>
+  </div>
 
-<div id="result"></div>
+  <div class="sim-algo-row">
+    <span class="sim-label">Select Algorithms</span>
+    <div class="algo-chips">
+      <label class="algo-chip fifo-chip" id="chip-fifo">
+        <input type="checkbox" id="chkFIFO" checked onchange="syncChip('chip-fifo',this)" />
+        FIFO
+      </label>
+      <label class="algo-chip lru-chip" id="chip-lru">
+        <input type="checkbox" id="chkLRU" checked onchange="syncChip('chip-lru',this)" />
+        LRU
+      </label>
+      <label class="algo-chip opt-chip" id="chip-opt">
+        <input type="checkbox" id="chkOPT" checked onchange="syncChip('chip-opt',this)" />
+        Optimal
+      </label>
+    </div>
+  </div>
+
+  <div class="sim-btn-row">
+    <button class="sim-run-btn" onclick="runSimulation()">
+      <i class="fas fa-play"></i> Run Simulation
+    </button>
+    <button class="sim-clear-btn" onclick="clearSim()">
+      <i class="fas fa-redo"></i> Clear
+    </button>
+  </div>
+
+  <div id="sim-error" class="sim-error"></div>
+
+</div>
+
+<!-- RESULTS -->
+<div id="sim-results"></div>
 
 </section>
 
@@ -363,11 +413,76 @@ Step 5 → Page 4 replaces **least recently used page (2)**
 
 <section id="tool-video" class="tool-page">
 
-<h2>Learning Video</h2>
+<button class="back-home-btn" onclick="goHome()">
+  <i class="fas fa-arrow-left"></i> Back to Home
+</button>
 
-<video width="100%" controls>
-<source src="video.mp4" type="video/mp4">
-</video>
+<div class="video-header">
+  <h2><i class="fas fa-play-circle"></i> Video Lessons</h2>
+  <!-- View toggle -->
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbSide"    onclick="setView('side')"    title="Player + Playlist side by side">
+      <i class="fas fa-columns"></i> Split
+    </button>
+    <button class="view-btn"        id="vbFocus"   onclick="setView('focus')"   title="Full-width player">
+      <i class="fas fa-expand-alt"></i> Focus
+    </button>
+    <button class="view-btn"        id="vbPlaylist" onclick="setView('playlist')" title="Playlist grid only">
+      <i class="fas fa-th-list"></i> Browse
+    </button>
+  </div>
+</div>
+
+<!-- ── SPLIT VIEW (default) ── -->
+<div class="video-layout" id="viewSide">
+
+  <div class="vl-player">
+    <div class="video-iframe-wrap">
+      <iframe id="mainPlayer"
+        src="https://www.youtube.com/embed/LKkiraa6RV4?rel=0&modestbranding=1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen title="Video Lesson">
+      </iframe>
+    </div>
+    <div class="now-playing-bar">
+      <i class="fas fa-music"></i>
+      <div class="np-info">
+        <div class="np-title" id="npTitle">Page Replacement Algorithms — Overview</div>
+        <div class="np-channel" id="npChannel">Gate Smashers</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vl-list" id="sidePlaylist"></div>
+
+</div>
+
+<!-- ── FOCUS VIEW ── -->
+<div class="video-layout" id="viewFocus" style="display:none">
+  <div class="vl-player full">
+    <div class="video-iframe-wrap">
+      <iframe id="focusPlayer"
+        src=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen title="Video Lesson Focus">
+      </iframe>
+    </div>
+    <div class="now-playing-bar">
+      <i class="fas fa-music"></i>
+      <div class="np-info">
+        <div class="np-title" id="npTitleFocus">Page Replacement Algorithms — Overview</div>
+        <div class="np-channel" id="npChannelFocus">Gate Smashers</div>
+      </div>
+    </div>
+  </div>
+  <!-- small compact list below -->
+  <div class="focus-compact-list" id="focusCompact"></div>
+</div>
+
+<!-- ── BROWSE VIEW ── -->
+<div class="video-layout" id="viewPlaylist" style="display:none">
+  <div class="browse-grid" id="browseGrid"></div>
+</div>
 
 </section>
 
