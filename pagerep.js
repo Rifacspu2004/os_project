@@ -1,83 +1,70 @@
 // MENU TOGGLE
-
 function toggleMenu(){
-document.getElementById("side-menu").classList.toggle("active");
+  document.getElementById("side-menu").classList.toggle("active");
 }
-
 
 // TOOL PAGE SWITCHING
-
 function openTool(id){
+  // hide content sections so tool appears cleanly
+  document.querySelectorAll(".content-section").forEach(function(sec){
+    sec.classList.remove("active");
+  });
 
-// hide content sections so tool appears cleanly
-document.querySelectorAll(".content-section").forEach(function(sec){
-sec.classList.remove("active");
-});
+  document.querySelectorAll(".tool-page").forEach(function(page){
+    page.classList.remove("active");
+  });
 
-document.querySelectorAll(".tool-page").forEach(function(page){
-page.classList.remove("active");
-});
-
-let selected=document.getElementById(id);
-
-if(selected){
-selected.classList.add("active");
+  let selected = document.getElementById(id);
+  if(selected){
+    selected.classList.add("active");
+  }
 }
-
-}
-
 
 // GO HOME — restore last active content page
-
 function goHome(){
+  document.querySelectorAll(".tool-page").forEach(function(page){
+    page.classList.remove("active");
+  });
 
-document.querySelectorAll(".tool-page").forEach(function(page){
-page.classList.remove("active");
-});
+  // find which page btn is active, default to page 1
+  let activeBtn = document.querySelector(".page-btn.active");
+  let pageNum = activeBtn ? activeBtn.getAttribute("data-page") : "1";
 
-// find which page btn is active, default to page 1
-let activeBtn=document.querySelector(".page-btn.active");
-let pageNum=activeBtn ? activeBtn.getAttribute("data-page") : "1";
+  document.querySelectorAll(".content-section").forEach(function(sec){
+    sec.classList.remove("active");
+  });
 
-document.querySelectorAll(".content-section").forEach(function(sec){
-sec.classList.remove("active");
-});
+  let target = document.getElementById("page-" + pageNum);
+  if(target) target.classList.add("active");
 
-let target=document.getElementById("page-"+pageNum);
-if(target) target.classList.add("active");
-
-window.scrollTo({top:0, behavior:"smooth"});
-
+  window.scrollTo({top:0, behavior:"smooth"});
 }
 
-
-
 // TOP NAVIGATION
-
 document.querySelectorAll(".page-btn").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    
+    document.querySelectorAll(".page-btn").forEach(function(b){
+      b.classList.remove("active");
+    });
+    
+    btn.classList.add("active");
+    let page = btn.getAttribute("data-page");
 
-btn.addEventListener("click",function(){
+    // Hide all normal content pages
+    document.querySelectorAll(".content-section").forEach(function(sec){
+      sec.classList.remove("active");
+    });
 
-document.querySelectorAll(".page-btn").forEach(function(b){
-b.classList.remove("active");
+    // Hide all tool pages so they don't overlap with normal pages!
+    document.querySelectorAll(".tool-page").forEach(function(tool){
+      tool.classList.remove("active");
+    });
+
+    // Show the requested page
+    document.getElementById("page-" + page).classList.add("active");
+  });
 });
-
-btn.classList.add("active");
-
-let page=btn.getAttribute("data-page");
-
-document.querySelectorAll(".content-section").forEach(function(sec){
-sec.classList.remove("active");
-});
-
-document.getElementById("page-"+page).classList.add("active");
-
-});
-
-});
-
-
-
 
 // ══════════════════════════════════
 //  SIMULATOR — ALL IN ONE
@@ -133,14 +120,14 @@ function calcLRU(ref, frames){
 
 function calcOptimal(ref, frames){
   var mem=[], faults=0, steps=[];
-  for(var i=0;i<ref.length;i++){
+  for(var i=0; i<ref.length; i++){
     var page=ref[i], hit=mem.includes(page), newPg=null;
     if(!hit){
       if(mem.length < frames){ mem.push(page); }
       else{
         var far=-1, ri=0;
-        for(var j=0;j<mem.length;j++){
-          var nx=ref.indexOf(mem[j],i+1);
+        for(var j=0; j<mem.length; j++){
+          var nx=ref.indexOf(mem[j], i+1);
           if(nx===-1){ri=j;break;}
           if(nx>far){far=nx;ri=j;}
         }
@@ -160,7 +147,7 @@ function buildTrace(result, frameCount, colorCls){
     html+='<div class="trace-step">';
     html+='<div class="ts-page">'+s.page+'</div>';
     html+='<div class="ts-frames">';
-    for(var f=0;f<frameCount;f++){
+    for(var f=0; f<frameCount; f++){
       var pg = s.mem[f]!==undefined ? s.mem[f] : "—";
       var cls = s.mem[f]===undefined ? "empty" : (pg==s.newPage ? "new-page" : "");
       html+='<div class="ts-frame '+cls+'">'+pg+'</div>';
@@ -227,15 +214,13 @@ function runSimulation(){
   document.getElementById("sim-results").scrollIntoView({behavior:"smooth", block:"nearest"});
 }
 
-/* keep old runFIFO alias so nothing breaks */
 function runFIFO(){ runSimulation(); }
-
 
 // ══════════════════════════════════
 //  VIDEO LESSON — click to load embed
 // ══════════════════════════════════
 
-// Video function - opens YouTube directly (no embed errors!)
+// Video function - opens YouTube directly
 function loadEmbed(wrapId, phId, videoId) {
   window.open("https://www.youtube.com/watch?v=" + videoId, "_blank");
 }

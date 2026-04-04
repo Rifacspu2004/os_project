@@ -2,537 +2,359 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Page Replacement in Operating Systems</title>
-
-<link rel="stylesheet" href="pagerep.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Replacement in Operating Systems</title>
+  <link rel="stylesheet" href="pagerep.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-
-<!-- HAMBURGER MENU -->
-
-<button id="menu-toggle" onclick="toggleMenu()">
-  <div class="bars">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <span class="menu-label">MENU</span>
-</button>
-
-
-<!-- SIDE TOOL MENU -->
-
-<div id="side-menu">
-
-<h3>Tools</h3>
-
-<button onclick="openTool('tool-simulator')">
-<i class="fas fa-calculator"></i> Simulator
-</button>
-
-<button onclick="openTool('tool-video')">
-<i class="fas fa-video"></i> Video Lesson
-</button>
-
-<button onclick="openTool('tool-about')">
-<i class="fas fa-info-circle"></i> About Project
-</button>
-
-</div>
-
-
-<header>
-<div class="container">
-
-<h1>Page Replacement in Operating Systems</h1>
-<p>Understanding Memory Management Techniques</p>
-
-</div>
-</header>
-
-
-<div class="container">
-
-
-<!-- TOP NAVIGATION -->
-
-<div class="page-navigation">
-
-<button class="page-btn active" data-page="1">Why It Matters</button>
-<button class="page-btn" data-page="2">Page Fault Process</button>
-<button class="page-btn" data-page="3">FIFO Algorithm</button>
-<button class="page-btn" data-page="4">Optimal Algorithm</button>
-<button class="page-btn" data-page="5">LRU Algorithm</button>
-<button class="page-btn" data-page="6">Other Algorithms</button>
-<button class="page-btn" data-page="7">Practical Example</button>
-<button class="page-btn" data-page="8">Performance Impact</button>
-<button class="page-btn" data-page="9">Conclusion</button>
-
-</div>
-
-
-<!-- PAGE 1 -->
-
-<section id="page-1" class="content-section active">
-
-<div class="section-icon">
-<i class="fas fa-question-circle"></i>
-</div>
-
-<h2>Why Page Replacement Matters</h2>
-
-<div class="highlight-box">
-
-<p>
-Page replacement is an important concept in operating systems that helps manage
-limited physical memory efficiently.
-</p>
-
-</div>
-
-<ul>
-
-<li>Allows programs larger than RAM to run using <strong>virtual memory</strong>.</li>
-<li>Reduces unnecessary disk access by choosing the best page to replace.</li>
-<li>Improves system responsiveness and multitasking capability.</li>
-
-</ul>
-
-</section>
-
-
-
-<!-- PAGE 2 -->
-
-<section id="page-2" class="content-section">
-
-<div class="section-icon">
-<i class="fas fa-cogs"></i>
-</div>
-
-<h2>Page Fault Handling Process</h2>
-
-<ol class="step-list">
-
-<li>A program requests access to a memory page.</li>
-
-<li>If the page is not present in RAM, a <strong>page fault</strong> occurs.</li>
-
-<li>The operating system searches for a free frame or selects a page to replace.</li>
-
-<li>If the selected page was modified, it is written back to disk.</li>
-
-<li>The requested page is loaded from secondary storage into memory.</li>
-
-<li>The program resumes execution.</li>
-
-</ol>
-
-</section>
-
-
-
-<!-- PAGE 3 -->
-
-<section id="page-3" class="content-section">
-
-<div class="section-icon">
-<i class="fas fa-sort-amount-down"></i>
-</div>
-
-<h2>FIFO (First In First Out)</h2>
-
-<p>FIFO replaces the page that entered memory first.</p>
-
-<ul>
-<li>Simple queue implementation.</li>
-<li>Pages removed in arrival order.</li>
-<li>May cause <strong>Belady’s anomaly</strong>.</li>
-</ul>
-
-<h3>Example</h3>
-
-<p><strong>Reference String:</strong> 1, 2, 3, 4, 1</p>
-
-<p>Frames: [1] → [1,2] → [1,2,3] → replace 1 → [4,2,3]</p>
-
-<p><strong>Page Faults:</strong> 4</p>
-
-</section>
-
-
-
-<!-- PAGE 4 -->
-
-<section id="page-4" class="content-section">
-
-<div class="section-icon">
-<i class="fas fa-chart-line"></i>
-</div>
-
-<h2>Optimal Page Replacement</h2>
-
-<p>
-The Optimal algorithm replaces the page that will not be used for the longest
-time in the future.
-</p>
-
-<ul>
-
-<li>Produces the <strong>minimum possible number of page faults</strong>.</li>
-
-<li>Used mainly as a benchmark to compare other algorithms.</li>
-
-<li>Not practical in real systems because future page references are unknown.</li>
-
-</ul>
-
-<h3>Example</h3>
-
-<p><strong>Reference String:</strong> 7, 0, 1, 2, 0, 3</p>
-
-<p><strong>Frames = 3</strong></p>
-
-<p>
-Step 1 → [7]  
-Step 2 → [7,0]  
-Step 3 → [7,0,1]  
-Step 4 → Next page = 2 → Replace page **7** (used farthest in future) → [2,0,1]  
-Step 5 → Page 0 already in memory  
-Step 6 → Page 3 replaces **1** → [2,0,3]  
-</p>
-
-<p><strong>Total Page Faults: 5</strong></p>
-
-</section>
-
-
-
-<!-- PAGE 5 -->
-
-<section id="page-5" class="content-section">
-
-<div class="section-icon">
-<i class="fas fa-history"></i>
-</div>
-
-<h2>LRU (Least Recently Used)</h2>
-
-<p>
-LRU replaces the page that has not been used for the longest time in the past.
-</p>
-
-<ul>
-
-<li>Based on the idea that recently used pages will likely be used again.</li>
-
-<li>Provides better performance than FIFO in many cases.</li>
-
-<li>Requires additional tracking of page usage history.</li>
-
-</ul>
-
-<h3>Example</h3>
-
-<p><strong>Reference String:</strong> 1, 2, 3, 1, 4</p>
-
-<p><strong>Frames = 3</strong></p>
-
-<p>
-Step 1 → [1]  
-Step 2 → [1,2]  
-Step 3 → [1,2,3]  
-Step 4 → Page 1 used again (recently used)  
-Step 5 → Page 4 replaces **least recently used page (2)**  
-</p>
-
-<p><strong>Total Page Faults: 4</strong></p>
-
-</section>
-
-<!-- PAGE 6 -->
-
-<section id="page-6" class="content-section">
-
-<div class="section-icon">
-<i class="fas fa-layer-group"></i>
-</div>
-
-<h2>Other Page Replacement Algorithms</h2>
-
-<h3>MRU (Most Recently Used)</h3>
-
-<ul>
-<li>Replaces the page used most recently.</li>
-<li>Opposite of LRU.</li>
-<li>Useful in sequential workloads.</li>
-</ul>
-
-<h3>Random Replacement</h3>
-
-<ul>
-<li>Selects a page randomly.</li>
-<li>Very simple to implement.</li>
-<li>Performance varies.</li>
-</ul>
-
-</section>
-
-
-
-<!-- PAGE 7 -->
-
-<section id="page-7" class="content-section">
-
-<h2>Practical Example</h2>
-
-<p><strong>Reference:</strong> 1, 3, 0, 3, 5, 6</p>
-
-<ul>
-<li>FIFO → 6 faults</li>
-<li>LRU → 5 faults</li>
-<li>Optimal → 4 faults</li>
-</ul>
-
-</section>
-
-
-
-<!-- PAGE 8 -->
-
-<section id="page-8" class="content-section">
-
-<h2>Performance Impact</h2>
-
-<ul class="performance-list">
-
-<li><i class="fas fa-hdd"></i> Reduces disk I/O.</li>
-<li><i class="fas fa-exclamation-triangle"></i> Prevents thrashing.</li>
-<li><i class="fas fa-cogs"></i> Modern OS use LRU variants.</li>
-
-</ul>
-
-</section>
-
-
-
-<!-- PAGE 9 -->
-
-<section id="page-9" class="content-section">
-
-<h2>Conclusion</h2>
-
-<ul>
-
-<li>Efficient memory management is essential.</li>
-<li>Different algorithms give different results.</li>
-<li>Understanding them improves system design.</li>
-
-</ul>
-
-</section>
-
-
-
-<!-- TOOL PAGE : SIMULATOR -->
-
-<section id="tool-simulator" class="tool-page">
-
-<button class="back-home-btn" onclick="goHome()">
-  <i class="fas fa-arrow-left"></i> Back to Home
-</button>
-
-<div class="sim-title-row">
-  <div class="sim-title-icon"><i class="fas fa-calculator"></i></div>
-  <h2>Page Replacement Simulator</h2>
-</div>
-
-<!-- INPUT CARD -->
-<div class="sim-input-card">
-
-  <div class="sim-field-row">
-    <div class="sim-field">
-      <label class="sim-label">Reference String</label>
-      <input id="refString" type="text" class="sim-input" placeholder="e.g. 7 0 1 2 0 3" />
+  <button id="menu-toggle" onclick="toggleMenu()">
+    <div class="bars">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    <div class="sim-field short">
-      <label class="sim-label">Number of Frames</label>
-      <input id="frames" type="number" class="sim-input" value="3" min="1" max="10" />
-    </div>
-  </div>
+    <span class="menu-label">MENU</span>
+  </button>
 
-  <div class="sim-algo-row">
-    <span class="sim-label">Select Algorithm(s)</span>
-    <div class="algo-chips">
-      <label class="algo-chip fifo-chip" id="chip-fifo">
-        <input type="checkbox" id="chkFIFO" onchange="syncChip('chip-fifo',this)" />
-        FIFO
-      </label>
-      <label class="algo-chip lru-chip" id="chip-lru">
-        <input type="checkbox" id="chkLRU" onchange="syncChip('chip-lru',this)" />
-        LRU
-      </label>
-      <label class="algo-chip opt-chip" id="chip-opt">
-        <input type="checkbox" id="chkOPT" onchange="syncChip('chip-opt',this)" />
-        Optimal
-      </label>
-    </div>
-  </div>
-
-  <div class="sim-btn-row">
-    <button class="sim-run-btn" onclick="runSimulation()">
-      <i class="fas fa-play"></i> Run Simulation
+  <div id="side-menu">
+    <h3>Tools</h3>
+    <button onclick="openTool('tool-simulator')">
+      <i class="fas fa-calculator"></i> Simulator
     </button>
-    <button class="sim-clear-btn" onclick="clearSim()">
-      <i class="fas fa-redo"></i> Clear
+    <button onclick="openTool('tool-video')">
+      <i class="fas fa-video"></i> Video Lesson
     </button>
   </div>
 
-  <div id="sim-error" class="sim-error"></div>
-
-</div>
-
-<!-- RESULTS -->
-<div id="sim-results"></div>
-
-</section>
-
-
-
-<!-- TOOL PAGE : VIDEO -->
-
-<section id="tool-video" class="tool-page">
-
-<button class="back-home-btn" onclick="goHome()">
-  <i class="fas fa-arrow-left"></i> Back to Home
-</button>
-
-<h2><i class="fas fa-play-circle"></i> Video Lessons</h2>
-<p class="video-intro">Watch these curated lectures on FIFO, LRU and Optimal page replacement.</p>
-
-<!-- VIDEO CARDS -->
-
-<!-- VIDEO CARDS - Opens YouTube directly (Jenny's Lectures) -->
-<!-- VIDEO CARDS - Opens YouTube directly when clicked -->
-<div class="vid-cards">
-
-  <!-- CARD 1: FIFO -->
-  <div class="vid-card" id="vc1">
-    <div class="vid-card-header fifo-hdr">
-      <span class="vid-card-tag">FIFO</span>
-      <span class="vid-card-src">Gate Smashers</span>
+  <header>
+    <div class="container">
+      <h1>Page Replacement in Operating Systems</h1>
+      <p>Understanding Memory Management Techniques</p>
     </div>
-    <div class="vid-card-title">FIFO (First In First Out) Page Replacement Algorithm</div>
-    <div class="vid-embed-wrap" id="wrap1">
-      <!-- Entire clickable area opens YouTube -->
-      <a href="https://www.youtube.com/watch?v=8rcUs5RutX0" target="_blank" style="text-decoration: none;">
-        <div class="vid-placeholder" style="cursor: pointer;">
-          <img src="https://img.youtube.com/vi/8rcUs5RutX0/mqdefault.jpg" alt="FIFO thumbnail" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
-          <div class="vid-play-btn"><i class="fas fa-play"></i></div>
-          <div class="vid-play-label">Click to Watch on YouTube</div>
+  </header>
+
+  <div class="container">
+
+    <div class="page-navigation">
+      <button class="page-btn active" data-page="1">Why It Matters</button>
+      <button class="page-btn" data-page="2">Page Fault Process</button>
+      <button class="page-btn" data-page="3">FIFO Algorithm</button>
+      <button class="page-btn" data-page="4">Optimal Algorithm</button>
+      <button class="page-btn" data-page="5">LRU Algorithm</button>
+      <button class="page-btn" data-page="6">Other Algorithms</button>
+      <button class="page-btn" data-page="7">Practical Example</button>
+      <button class="page-btn" data-page="8">Performance Impact</button>
+      <button class="page-btn" data-page="9">Conclusion</button>
+      <button class="page-btn" data-page="10">About Project</button>
+    </div>
+
+    <section id="page-1" class="content-section active">
+      <div class="section-icon">
+        <i class="fas fa-question-circle"></i>
+      </div>
+      <h2>Why Page Replacement Matters</h2>
+      <div class="highlight-box">
+        <p>Page replacement is an important concept in operating systems that helps manage limited physical memory efficiently.</p>
+      </div>
+      <ul>
+        <li>Allows programs larger than RAM to run using <strong>virtual memory</strong>.</li>
+        <li>Reduces unnecessary disk access by choosing the best page to replace.</li>
+        <li>Improves system responsiveness and multitasking capability.</li>
+      </ul>
+    </section>
+
+    <section id="page-2" class="content-section">
+      <div class="section-icon">
+        <i class="fas fa-cogs"></i>
+      </div>
+      <h2>Page Fault Handling Process</h2>
+      <ol class="step-list">
+        <li>A program requests access to a memory page.</li>
+        <li>If the page is not present in RAM, a <strong>page fault</strong> occurs.</li>
+        <li>The operating system searches for a free frame or selects a page to replace.</li>
+        <li>If the selected page was modified, it is written back to disk.</li>
+        <li>The requested page is loaded from secondary storage into memory.</li>
+        <li>The program resumes execution.</li>
+      </ol>
+    </section>
+
+    <section id="page-3" class="content-section">
+      <div class="section-icon">
+        <i class="fas fa-sort-amount-down"></i>
+      </div>
+      <h2>FIFO (First In First Out)</h2>
+      <p>FIFO replaces the page that entered memory first.</p>
+      <ul>
+        <li>Simple queue implementation.</li>
+        <li>Pages removed in arrival order.</li>
+        <li>May cause <strong>Belady’s anomaly</strong>.</li>
+      </ul>
+      <h3>Example</h3>
+      <p><strong>Reference String:</strong> 1, 2, 3, 4, 1</p>
+      <p>Frames: [1] → [1,2] → [1,2,3] → replace 1 → [4,2,3]</p>
+      <p><strong>Page Faults:</strong> 4</p>
+    </section>
+
+    <section id="page-4" class="content-section">
+      <div class="section-icon">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h2>Optimal Page Replacement</h2>
+      <p>The Optimal algorithm replaces the page that will not be used for the longest time in the future.</p>
+      <ul>
+        <li>Produces the <strong>minimum possible number of page faults</strong>.</li>
+        <li>Used mainly as a benchmark to compare other algorithms.</li>
+        <li>Not practical in real systems because future page references are unknown.</li>
+      </ul>
+      <h3>Example</h3>
+      <p><strong>Reference String:</strong> 7, 0, 1, 2, 0, 3</p>
+      <p><strong>Frames = 3</strong></p>
+      <p>
+        Step 1 → [7] <br>
+        Step 2 → [7,0] <br>
+        Step 3 → [7,0,1] <br>
+        Step 4 → Next page = 2 → Replace page **7** (used farthest in future) → [2,0,1] <br>
+        Step 5 → Page 0 already in memory <br>
+        Step 6 → Page 3 replaces **1** → [2,0,3]
+      </p>
+      <p><strong>Total Page Faults: 5</strong></p>
+    </section>
+
+    <section id="page-5" class="content-section">
+      <div class="section-icon">
+        <i class="fas fa-history"></i>
+      </div>
+      <h2>LRU (Least Recently Used)</h2>
+      <p>LRU replaces the page that has not been used for the longest time in the past.</p>
+      <ul>
+        <li>Based on the idea that recently used pages will likely be used again.</li>
+        <li>Provides better performance than FIFO in many cases.</li>
+        <li>Requires additional tracking of page usage history.</li>
+      </ul>
+      <h3>Example</h3>
+      <p><strong>Reference String:</strong> 1, 2, 3, 1, 4</p>
+      <p><strong>Frames = 3</strong></p>
+      <p>
+        Step 1 → [1] <br>
+        Step 2 → [1,2] <br>
+        Step 3 → [1,2,3] <br>
+        Step 4 → Page 1 used again (recently used) <br>
+        Step 5 → Page 4 replaces **least recently used page (2)**
+      </p>
+      <p><strong>Total Page Faults: 4</strong></p>
+    </section>
+
+    <section id="page-6" class="content-section">
+      <div class="section-icon">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <h2>Other Page Replacement Algorithms</h2>
+      <h3>MRU (Most Recently Used)</h3>
+      <ul>
+        <li>Replaces the page used most recently.</li>
+        <li>Opposite of LRU.</li>
+        <li>Useful in sequential workloads.</li>
+      </ul>
+      <h3>Random Replacement</h3>
+      <ul>
+        <li>Selects a page randomly.</li>
+        <li>Very simple to implement.</li>
+        <li>Performance varies.</li>
+      </ul>
+    </section>
+
+    <section id="page-7" class="content-section">
+      <h2>Practical Example</h2>
+      <p><strong>Reference:</strong> 1, 3, 0, 3, 5, 6</p>
+      <ul>
+        <li>FIFO → 6 faults</li>
+        <li>LRU → 5 faults</li>
+        <li>Optimal → 4 faults</li>
+      </ul>
+    </section>
+
+    <section id="page-8" class="content-section">
+      <h2>Performance Impact</h2>
+      <ul class="performance-list">
+        <li><i class="fas fa-hdd"></i> Reduces disk I/O.</li>
+        <li><i class="fas fa-exclamation-triangle"></i> Prevents thrashing.</li>
+        <li><i class="fas fa-cogs"></i> Modern OS use LRU variants.</li>
+      </ul>
+    </section>
+
+    <section id="page-9" class="content-section">
+      <h2>Conclusion</h2>
+      <ul>
+        <li>Efficient memory management is essential.</li>
+        <li>Different algorithms give different results.</li>
+        <li>Understanding them improves system design.</li>
+      </ul>
+    </section>
+
+    <section id="page-10" class="content-section">
+      <div class="sim-title-row">
+        <div class="sim-title-icon"><i class="fas fa-info-circle"></i></div>
+        <h2>About This Project</h2>
+      </div>
+
+      <div class="sim-input-card">
+        <h3 style="color: #1a2980; margin-bottom: 15px;"><i class="fas fa-microchip"></i> Page Replacement Simulator</h3>
+        <p style="margin-bottom: 20px;">An interactive tool to visualize and understand page replacement algorithms in Operating Systems.</p>
+        
+        <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-code-branch"></i> Algorithms Covered</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+          <span style="background: #fff0f0; color: #c92a2a; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FIFO</span>
+          <span style="background: #f0fff4; color: #2b8a3e; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">LRU</span>
+          <span style="background: #e8f4ff; color: #1864ab; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Optimal</span>
+          <span style="background: #f0f4ff; color: #1a2980; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">MRU</span>
+          <span style="background: #f0f4ff; color: #1a2980; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Random</span>
         </div>
-      </a>
-    </div>
-    <a class="vid-yt-link" href="https://www.youtube.com/watch?v=8rcUs5RutX0" target="_blank" rel="noopener">
-      <i class="fab fa-youtube"></i> Open on YouTube
-    </a>
-  </div>
 
-  <!-- CARD 2: LRU -->
-  <div class="vid-card" id="vc2">
-    <div class="vid-card-header lru-hdr">
-      <span class="vid-card-tag">LRU</span>
-      <span class="vid-card-src">Gate Smashers</span>
-    </div>
-    <div class="vid-card-title">LRU (Least Recently Used) Page Replacement Algorithm</div>
-    <div class="vid-embed-wrap" id="wrap2">
-      <a href="https://www.youtube.com/watch?v=dYIoWkCvd6A" target="_blank" style="text-decoration: none;">
-        <div class="vid-placeholder" style="cursor: pointer;">
-          <img src="https://img.youtube.com/vi/dYIoWkCvd6A/mqdefault.jpg" alt="LRU thumbnail" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
-          <div class="vid-play-btn"><i class="fas fa-play"></i></div>
-          <div class="vid-play-label">Click to Watch on YouTube</div>
+        <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-users"></i> Created By</h3>
+        <p style="margin-bottom: 20px;"><strong>MOHAMED RIFATH .A</strong> & <strong>SHREYA SRI KC</strong></p>
+
+        <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-graduation-cap"></i> Purpose</h3>
+        <p>Educational project for Operating Systems coursework - demonstrating memory management techniques.</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px; padding: 15px; color: #8896aa; font-size: 0.8rem;">
+        <i class="fas fa-heart" style="color: #e03131;"></i> Created with passion for learning
+      </div>
+    </section>
+
+    <section id="tool-simulator" class="tool-page">
+      <button class="back-home-btn" onclick="goHome()">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+
+      <div class="sim-title-row">
+        <div class="sim-title-icon"><i class="fas fa-calculator"></i></div>
+        <h2>Page Replacement Simulator</h2>
+      </div>
+
+      <div class="sim-input-card">
+        <div class="sim-field-row">
+          <div class="sim-field">
+            <label class="sim-label">Reference String</label>
+            <input id="refString" type="text" class="sim-input" placeholder="e.g. 7 0 1 2 0 3" />
+          </div>
+          <div class="sim-field short">
+            <label class="sim-label">Number of Frames</label>
+            <input id="frames" type="number" class="sim-input" value="3" min="1" max="10" />
+          </div>
         </div>
-      </a>
-    </div>
-    <a class="vid-yt-link" href="https://www.youtube.com/watch?v=dYIoWkCvd6A" target="_blank" rel="noopener">
-      <i class="fab fa-youtube"></i> Open on YouTube
-    </a>
-  </div>
 
-  <!-- CARD 3: Optimal -->
-  <div class="vid-card" id="vc3">
-    <div class="vid-card-header opt-hdr">
-      <span class="vid-card-tag">Optimal</span>
-      <span class="vid-card-src">Gate Smashers</span>
-    </div>
-    <div class="vid-card-title">Optimal Page Replacement Algorithm</div>
-    <div class="vid-embed-wrap" id="wrap3">
-      <a href="https://www.youtube.com/watch?v=DXU7SqsYDvg" target="_blank" style="text-decoration: none;">
-        <div class="vid-placeholder" style="cursor: pointer;">
-          <img src="https://img.youtube.com/vi/DXU7SqsYDvg/mqdefault.jpg" alt="Optimal thumbnail" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
-          <div class="vid-play-btn"><i class="fas fa-play"></i></div>
-          <div class="vid-play-label">Click to Watch on YouTube</div>
+        <div class="sim-algo-row">
+          <span class="sim-label">Select Algorithm(s)</span>
+          <div class="algo-chips">
+            <label class="algo-chip fifo-chip" id="chip-fifo">
+              <input type="checkbox" id="chkFIFO" onchange="syncChip('chip-fifo',this)" />
+              FIFO
+            </label>
+            <label class="algo-chip lru-chip" id="chip-lru">
+              <input type="checkbox" id="chkLRU" onchange="syncChip('chip-lru',this)" />
+              LRU
+            </label>
+            <label class="algo-chip opt-chip" id="chip-opt">
+              <input type="checkbox" id="chkOPT" onchange="syncChip('chip-opt',this)" />
+              Optimal
+            </label>
+          </div>
         </div>
-      </a>
-    </div>
-    <a class="vid-yt-link" href="https://www.youtube.com/watch?v=DXU7SqsYDvg" target="_blank" rel="noopener">
-      <i class="fab fa-youtube"></i> Open on YouTube
-    </a>
+
+        <div class="sim-btn-row">
+          <button class="sim-run-btn" onclick="runSimulation()">
+            <i class="fas fa-play"></i> Run Simulation
+          </button>
+          <button class="sim-clear-btn" onclick="clearSim()">
+            <i class="fas fa-redo"></i> Clear
+          </button>
+        </div>
+
+        <div id="sim-error" class="sim-error"></div>
+      </div>
+
+      <div id="sim-results"></div>
+    </section>
+
+    <section id="tool-video" class="tool-page">
+      <button class="back-home-btn" onclick="goHome()">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+
+      <h2><i class="fas fa-play-circle"></i> Video Lessons</h2>
+      <p class="video-intro">Watch these curated lectures on FIFO, LRU and Optimal page replacement.</p>
+
+      <div class="vid-cards">
+        <div class="vid-card" id="vc1">
+          <div class="vid-card-header fifo-hdr">
+            <span class="vid-card-tag">FIFO</span>
+            <span class="vid-card-src">Gate Smashers</span>
+          </div>
+          <div class="vid-card-title">FIFO (First In First Out) Page Replacement Algorithm</div>
+          <div class="vid-embed-wrap" id="wrap1">
+            <a href="https://www.youtube.com/watch?v=8rcUs5RutX0" target="_blank" style="text-decoration: none;">
+              <div class="vid-placeholder" style="cursor: pointer;">
+                <img src="https://img.youtube.com/vi/8rcUs5RutX0/mqdefault.jpg" alt="FIFO thumbnail" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+                <div class="vid-play-btn"><i class="fas fa-play"></i></div>
+                <div class="vid-play-label">Click to Watch on YouTube</div>
+              </div>
+            </a>
+          </div>
+          <a class="vid-yt-link" href="https://www.youtube.com/watch?v=8rcUs5RutX0" target="_blank" rel="noopener">
+            <i class="fab fa-youtube"></i> Open on YouTube
+          </a>
+        </div>
+
+        <div class="vid-card" id="vc2">
+          <div class="vid-card-header lru-hdr">
+            <span class="vid-card-tag">LRU</span>
+            <span class="vid-card-src">Gate Smashers</span>
+          </div>
+          <div class="vid-card-title">LRU (Least Recently Used) Page Replacement Algorithm</div>
+          <div class="vid-embed-wrap" id="wrap2">
+            <a href="https://www.youtube.com/watch?v=dYIoWkCvd6A" target="_blank" style="text-decoration: none;">
+              <div class="vid-placeholder" style="cursor: pointer;">
+                <img src="https://img.youtube.com/vi/dYIoWkCvd6A/mqdefault.jpg" alt="LRU thumbnail" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+                <div class="vid-play-btn"><i class="fas fa-play"></i></div>
+                <div class="vid-play-label">Click to Watch on YouTube</div>
+              </div>
+            </a>
+          </div>
+          <a class="vid-yt-link" href="https://www.youtube.com/watch?v=dYIoWkCvd6A" target="_blank" rel="noopener">
+            <i class="fab fa-youtube"></i> Open on YouTube
+          </a>
+        </div>
+
+        <div class="vid-card" id="vc3">
+          <div class="vid-card-header opt-hdr">
+            <span class="vid-card-tag">Optimal</span>
+            <span class="vid-card-src">Gate Smashers</span>
+          </div>
+          <div class="vid-card-title">Optimal Page Replacement Algorithm</div>
+          <div class="vid-embed-wrap" id="wrap3">
+            <a href="https://www.youtube.com/watch?v=DXU7SqsYDvg" target="_blank" style="text-decoration: none;">
+              <div class="vid-placeholder" style="cursor: pointer;">
+                <img src="https://img.youtube.com/vi/DXU7SqsYDvg/mqdefault.jpg" alt="Optimal thumbnail" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+                <div class="vid-play-btn"><i class="fas fa-play"></i></div>
+                <div class="vid-play-label">Click to Watch on YouTube</div>
+              </div>
+            </a>
+          </div>
+          <a class="vid-yt-link" href="https://www.youtube.com/watch?v=DXU7SqsYDvg" target="_blank" rel="noopener">
+            <i class="fab fa-youtube"></i> Open on YouTube
+          </a>
+        </div>
+
+      </div>
+    </section>
+
   </div>
 
-</div><!-- end vid-cards -->
-
-</div>
-<!-- TOOL PAGE : ABOUT -->
-
-<!-- TOOL PAGE : ABOUT -->
-<section id="tool-about" class="tool-page">
-
-<button class="back-home-btn" onclick="goHome()">
-  <i class="fas fa-arrow-left"></i> Back to Home
-</button>
-
-<div class="sim-title-row">
-  <div class="sim-title-icon"><i class="fas fa-info-circle"></i></div>
-  <h2>About This Project</h2>
-</div>
-
-<div class="sim-input-card">
-  <h3 style="color: #1a2980; margin-bottom: 15px;"><i class="fas fa-microchip"></i> Page Replacement Simulator</h3>
-  <p style="margin-bottom: 20px;">An interactive tool to visualize and understand page replacement algorithms in Operating Systems.</p>
-  
-  <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-code-branch"></i> Algorithms Covered</h3>
-  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-    <span style="background: #fff0f0; color: #c92a2a; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FIFO</span>
-    <span style="background: #f0fff4; color: #2b8a3e; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">LRU</span>
-    <span style="background: #e8f4ff; color: #1864ab; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Optimal</span>
-    <span style="background: #f0f4ff; color: #1a2980; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">MRU</span>
-    <span style="background: #f0f4ff; color: #1a2980; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Random</span>
-  </div>
-
-  <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-users"></i> Created By</h3>
-  <p style="margin-bottom: 20px;"><strong>MOHAMED RIFATH .A</strong> & <strong>SHREYA SRI KC</strong></p>
-
-  <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-graduation-cap"></i> Purpose</h3>
-  <p>Educational project for Operating Systems coursework - demonstrating memory management techniques.</p>
-</div>
-
-<div style="text-align: center; margin-top: 20px; padding: 15px; color: #8896aa; font-size: 0.8rem;">
-  <i class="fas fa-heart" style="color: #e03131;"></i> Created with passion for learning
-</div>
-
-</section>
-<script src="pagerep.js"></script>
-
+  <script src="pagerep.js"></script>
 </body>
 </html>
