@@ -89,15 +89,6 @@ function syncChip(chipId, checkbox){
   if(chip) chip.classList.toggle("on", checkbox.checked);
 }
 
-/* init chip states on load */
-window.addEventListener("load", function(){
-  ["chkFIFO","chkLRU","chkOPT"].forEach(function(id, i){
-    var ids = ["chip-fifo","chip-lru","chip-opt"];
-    var el = document.getElementById(id);
-    if(el) syncChip(ids[i], el);
-  });
-});
-
 function clearSim(){
   document.getElementById("refString").value = "";
   document.getElementById("frames").value = "3";
@@ -241,145 +232,10 @@ function runFIFO(){ runSimulation(); }
 
 
 // ══════════════════════════════════
-//  VIDEO LESSON
+//  VIDEO LESSON — click to load embed
 // ══════════════════════════════════
 
-var videos = [
-  { id:"LKkiraa6RV4", title:"Page Replacement Algorithms — Overview",  channel:"Gate Smashers", tag:"General" },
-  { id:"BmMIFoVFKJs", title:"FIFO Page Replacement Explained",          channel:"Neso Academy",  tag:"fifo"    },
-  { id:"4eTSFSJL6Ss", title:"LRU — Least Recently Used",                channel:"Gate Smashers", tag:"lru"     },
-  { id:"T-3dRlNEtKk", title:"Optimal Page Replacement",                 channel:"Neso Academy",  tag:"opt"     },
-  { id:"qlH4-oHnBb8", title:"Belady Anomaly in FIFO",                   channel:"Simple Snippets",tag:"fifo"   },
-  { id:"2Z8mi-T3sHg", title:"Page Fault Handling Step by Step",         channel:"Neso Academy",  tag:"General" }
-];
-
-var currentView = "side";
-var currentVideoIdx = 0;
-
-function thumb(id){ return "https://img.youtube.com/vi/"+id+"/mqdefault.jpg"; }
-
-function tagClass(t){
-  if(t==="fifo") return "fifo";
-  if(t==="lru")  return "lru";
-  if(t==="opt")  return "opt";
-  return "";
+// Video function - opens YouTube directly (no embed errors!)
+function loadEmbed(wrapId, phId, videoId) {
+  window.open("https://www.youtube.com/watch?v=" + videoId, "_blank");
 }
-
-/* build all three view lists once when video tool opens */
-function buildVideoUI(){
-  buildSidePlaylist();
-  buildFocusPills();
-  buildBrowseGrid();
-  loadVideo(0, false);
-}
-
-function buildSidePlaylist(){
-  var c = document.getElementById("sidePlaylist");
-  if(!c) return;
-  c.innerHTML = "";
-  videos.forEach(function(v, i){
-    var d = document.createElement("div");
-    d.className = "playlist-item" + (i===0?" active":"");
-    d.innerHTML =
-      '<img src="'+thumb(v.id)+'" alt="" onerror="this.style.display=\'none\'"/>' +
-      '<div class="pi-info"><div class="pi-title">'+v.title+'</div><div class="pi-ch">'+v.channel+'</div></div>' +
-      '<span class="pi-tag '+tagClass(v.tag)+'">'+v.tag+'</span>';
-    d.onclick = function(){ loadVideo(i, true); };
-    c.appendChild(d);
-  });
-}
-
-function buildFocusPills(){
-  var c = document.getElementById("focusCompact");
-  if(!c) return;
-  c.innerHTML = "";
-  videos.forEach(function(v, i){
-    var d = document.createElement("div");
-    d.className = "focus-pill" + (i===0?" active":"");
-    d.innerHTML =
-      '<img src="'+thumb(v.id)+'" alt="" onerror="this.style.display=\'none\'"/>' +
-      v.title.substring(0,28)+(v.title.length>28?"…":"");
-    d.onclick = function(){ loadVideo(i, true); };
-    c.appendChild(d);
-  });
-}
-
-function buildBrowseGrid(){
-  var c = document.getElementById("browseGrid");
-  if(!c) return;
-  c.innerHTML = "";
-  videos.forEach(function(v, i){
-    var d = document.createElement("div");
-    d.className = "browse-card" + (i===0?" active":"");
-    d.innerHTML =
-      '<div class="bc-thumb">' +
-        '<img src="'+thumb(v.id)+'" alt="" onerror="this.style.background=\'#dde\'"/>' +
-        '<div class="bc-play-overlay"><i class="fas fa-play-circle"></i></div>' +
-        '<span class="bc-tag">'+v.tag+'</span>' +
-      '</div>' +
-      '<div class="bc-body"><div class="bc-title">'+v.title+'</div>' +
-      '<div class="bc-channel"><i class="fab fa-youtube"></i>'+v.channel+'</div></div>';
-    d.onclick = function(){ loadVideo(i, true); };
-    c.appendChild(d);
-  });
-}
-
-function loadVideo(idx, autoplay){
-  currentVideoIdx = idx;
-  var v = videos[idx];
-  var src = "https://www.youtube.com/embed/"+v.id+"?rel=0&modestbranding=1"+(autoplay?"&autoplay=1":"");
-
-  /* update all players */
-  var mp = document.getElementById("mainPlayer");
-  var fp = document.getElementById("focusPlayer");
-  if(mp) mp.src = src;
-  if(fp) fp.src = src;
-
-  /* now playing bars */
-  ["npTitle","npTitleFocus"].forEach(function(id){
-    var el = document.getElementById(id);
-    if(el) el.textContent = v.title;
-  });
-  ["npChannel","npChannelFocus"].forEach(function(id){
-    var el = document.getElementById(id);
-    if(el) el.textContent = v.channel;
-  });
-
-  /* highlight active in all views */
-  highlightActive("sidePlaylist",   "playlist-item", idx);
-  highlightActive("focusCompact",   "focus-pill",    idx);
-  highlightActive("browseGrid",     "browse-card",   idx);
-}
-
-function highlightActive(containerId, cls, idx){
-  var c = document.getElementById(containerId);
-  if(!c) return;
-  var items = c.querySelectorAll("."+cls);
-  items.forEach(function(el,i){ el.classList.toggle("active", i===idx); });
-}
-
-/* view switcher */
-function setView(v){
-  currentView = v;
-  document.getElementById("viewSide").style.display     = (v==="side")     ? "" : "none";
-  document.getElementById("viewFocus").style.display    = (v==="focus")    ? "" : "none";
-  document.getElementById("viewPlaylist").style.display = (v==="playlist") ? "" : "none";
-
-  document.getElementById("vbSide").classList.toggle("active",     v==="side");
-  document.getElementById("vbFocus").classList.toggle("active",    v==="focus");
-  document.getElementById("vbPlaylist").classList.toggle("active", v==="playlist");
-
-  /* sync current video to newly visible player */
-  loadVideo(currentVideoIdx, false);
-}
-
-/* init when tool-video is opened */
-var _videoBuilt = false;
-var _origOpenTool = openTool;
-openTool = function(id){
-  _origOpenTool(id);
-  if(id === "tool-video" && !_videoBuilt){
-    _videoBuilt = true;
-    buildVideoUI();
-  }
-};
