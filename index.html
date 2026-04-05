@@ -28,6 +28,9 @@
     <button onclick="openTool('tool-video')">
       <i class="fas fa-video"></i> Video Lesson
     </button>
+    <button onclick="openTool('tool-about')">
+      <i class="fas fa-info-circle"></i> About Project
+    </button>
   </div>
 
   <header>
@@ -49,7 +52,6 @@
       <button class="page-btn" data-page="7">Practical Example</button>
       <button class="page-btn" data-page="8">Performance Impact</button>
       <button class="page-btn" data-page="9">Conclusion</button>
-      <button class="page-btn" data-page="10">About Project</button>
     </div>
 
     <section id="page-1" class="content-section active">
@@ -195,7 +197,11 @@
       </ul>
     </section>
 
-    <section id="page-10" class="content-section">
+    <section id="tool-about" class="tool-page">
+      <button class="back-home-btn" onclick="goHome()">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+
       <div class="sim-title-row">
         <div class="sim-title-icon"><i class="fas fa-info-circle"></i></div>
         <h2>About This Project</h2>
@@ -204,7 +210,7 @@
       <div class="sim-input-card">
         <h3 style="color: #1a2980; margin-bottom: 15px;"><i class="fas fa-microchip"></i> Page Replacement Simulator</h3>
         <p style="margin-bottom: 20px;">An interactive tool to visualize and understand page replacement algorithms in Operating Systems.</p>
-        
+
         <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-code-branch"></i> Algorithms Covered</h3>
         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
           <span style="background: #fff0f0; color: #c92a2a; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FIFO</span>
@@ -215,7 +221,7 @@
         </div>
 
         <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-users"></i> Created By</h3>
-        <p style="margin-bottom: 20px;"><strong>MOHAMED RIFATH .A</strong> & <strong>SHREYA SRI KC</strong></p>
+        <p style="margin-bottom: 20px;"><strong>MOHAMED RIFATH .A</strong> &amp; <strong>SHREYA SRI KC</strong></p>
 
         <h3 style="color: #1a2980; margin-bottom: 10px;"><i class="fas fa-graduation-cap"></i> Purpose</h3>
         <p>Educational project for Operating Systems coursework - demonstrating memory management techniques.</p>
@@ -249,21 +255,26 @@
         </div>
 
         <div class="sim-algo-row">
-          <span class="sim-label">Select Algorithm(s)</span>
-          <div class="algo-chips">
-            <label class="algo-chip fifo-chip" id="chip-fifo">
-              <input type="checkbox" id="chkFIFO" onchange="syncChip('chip-fifo',this)" />
-              FIFO
-            </label>
-            <label class="algo-chip lru-chip" id="chip-lru">
-              <input type="checkbox" id="chkLRU" onchange="syncChip('chip-lru',this)" />
-              LRU
-            </label>
-            <label class="algo-chip opt-chip" id="chip-opt">
-              <input type="checkbox" id="chkOPT" onchange="syncChip('chip-opt',this)" />
-              Optimal
-            </label>
+          <div class="sim-algo-header">
+            <span class="sim-label">Select Algorithm(s)</span>
           </div>
+        <div class="algo-chips">
+  <label class="algo-chip fifo-chip" id="chip-fifo">
+    <input type="checkbox" id="chkFIFO" onchange="syncChip('chip-fifo',this)" />
+    FIFO
+  </label>
+  <label class="algo-chip lru-chip" id="chip-lru">
+    <input type="checkbox" id="chkLRU" onchange="syncChip('chip-lru',this)" />
+    LRU
+  </label>
+  <label class="algo-chip opt-chip" id="chip-opt">
+    <input type="checkbox" id="chkOPT" onchange="syncChip('chip-opt',this)" />
+    Optimal
+  </label>
+  <button type="button" class="deselect-all-btn" id="deselectAllBtn" onclick="deselectAllAlgorithms()">
+  <i class="fas fa-times-circle"></i> Deselect All
+</button>
+</div>
         </div>
 
         <div class="sim-btn-row">

@@ -218,7 +218,33 @@ button{ cursor:pointer; }
 
 /* algo chips */
 .sim-algo-row{ margin-bottom:20px; }
-.algo-chips{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+.sim-algo-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+.sim-algo-header .sim-label{ margin-bottom:0; }
+.deselect-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:transparent;
+  color:#8896aa;
+  border:1.5px solid #d0daf0;
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:0.75rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.deselect-btn:hover{
+  border-color:#e03131;
+  color:#e03131;
+  background:#fff0f0;
+}
+.algo-chips{ display:flex; gap:10px; flex-wrap:wrap; }
 .algo-chip{ display:inline-flex; align-items:center; gap:0; padding:9px 22px; border-radius:25px; font-size:0.88rem; font-weight:700; cursor:pointer; border:2px solid; transition:all 0.2s; user-select:none; letter-spacing:0.3px; }
 .algo-chip input{ display:none; }
 .fifo-chip{ color:#e03131; border-color:#e03131; background:white; }
@@ -307,4 +333,42 @@ button{ cursor:pointer; }
   #viewSide{ flex-direction:column; }
   .vl-list{ width:100%; max-height:300px; }
   .browse-grid{ grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+/* DESELECT ALL BUTTON - prominent and well placed */
+.deselect-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 9px 24px;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 8px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.deselect-all-btn:hover {
+  background: #dc3545;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.3);
+}
+
+.deselect-all-btn i {
+  font-size: 1rem;
+}
+
+/* Make the algo-chips container wrap nicely */
+.algo-chips {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 8px;
 }

@@ -76,6 +76,17 @@ function syncChip(chipId, checkbox){
   if(chip) chip.classList.toggle("on", checkbox.checked);
 }
 
+function deselectAll(){
+  ["chkFIFO","chkLRU","chkOPT"].forEach(function(id){
+    var cb = document.getElementById(id);
+    if(cb){ cb.checked = false; }
+  });
+  ["chip-fifo","chip-lru","chip-opt"].forEach(function(id){
+    var chip = document.getElementById(id);
+    if(chip){ chip.classList.remove("on"); }
+  });
+}
+
 function clearSim(){
   document.getElementById("refString").value = "";
   document.getElementById("frames").value = "3";
@@ -223,4 +234,22 @@ function runFIFO(){ runSimulation(); }
 // Video function - opens YouTube directly
 function loadEmbed(wrapId, phId, videoId) {
   window.open("https://www.youtube.com/watch?v=" + videoId, "_blank");
+}
+
+// DESELECT ALL ALGORITHMS
+function deselectAllAlgorithms() {
+  // Get all algorithm checkboxes
+  const fifoCheck = document.getElementById('chkFIFO');
+  const lruCheck = document.getElementById('chkLRU');
+  const optCheck = document.getElementById('chkOPT');
+  
+  // Uncheck them all
+  if (fifoCheck) fifoCheck.checked = false;
+  if (lruCheck) lruCheck.checked = false;
+  if (optCheck) optCheck.checked = false;
+  
+  // Update chip styles to match unchecked state
+  syncChip('chip-fifo', fifoCheck);
+  syncChip('chip-lru', lruCheck);
+  syncChip('chip-opt', optCheck);
 }
